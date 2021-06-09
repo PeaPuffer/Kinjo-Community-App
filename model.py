@@ -1,16 +1,16 @@
 """ Models for community watch app"""
 
-from flask_sqlalchemy import SQLALCHEMY
 from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 
-db = SQLalchemy()
+db = SQLAlchemy()
 
 
 
 class User(db.Model):
     """A user"""
 
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     user_id = db.Column(db.Integer, 
                         primary_key=True,
@@ -18,37 +18,54 @@ class User(db.Model):
     
     fname = db.Column(db.String, nullable=False)
     lname = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String, nullable=False)
-    city = db.Column(db.String, nullable=False)
-    zipcode = db.Column(db.Integer, nullable=False)
+    u_neighborhood = db.Column(db.Integer, nullable=False)
+
 
     def __repr__(self):
-        return f'<User user_id={self.user_id} email={self.email} fname={self.fname} city={self.city}>'
+        return f"<User user_id={self.user_id} email={self.email} fname={self.fname}>"
 
 
 
 class Report(db.Model):
     """A report"""
 
-    __tablename__ = 'reports'
+    __tablename__ = "reports"
 
     report_id = db.Column(db.Integer, 
                         primary_key=True, 
                         autoincrement=True)
-    report_content = db.Column(db.Text, nullable=False)
-    location = db.Column(db.String, nullable=False)
-    created_report = db.Column(db.DateTime)
-    #comment = db.Column(db.String(100))
+    report_title = db.Column(db.String, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    report_datetime = db.Column(db.DateTime, nullable=False)
+    neighborhood = db.Column(db.String, nullable=False)
+    user_report_id = db.Column(db.Integer, db.ForeignKey("user_reports.user_report_id"))
+
+
 
 
     def __repr__(self):
-        return f'<Report report_id={self.report} location={self.location} created_report={self.created_report}
-
- 
- 
+        return f"<Report report_id={self.report_id} report_title={self.report_title} description={self.description} report_datetime={self.report_datetime} user_report_id={self.user_report_id}>"
 
 
+
+class UserReport(db.Model):
+    """A user report"""
+
+    __tablename__ = "user_reports"
+
+    user_report_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    incident_title = db.Column(db.String, nullable=False)
+    incident = db.Column(db.Text, nullable=False)
+    created_on = db.Column(db.DateTime, nullable=False)
+    incident_datetime = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+
+
+    def __repr__(self):
+        return f"<UserReport incident_title={self.incident_title} incident={self.incident} incident_datetime={self.incident_datetime} user_id{self.user_id}>"
 
 
 
