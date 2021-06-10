@@ -18,58 +18,86 @@ class User(db.Model):
     
     fname = db.Column(db.String, nullable=False)
     lname = db.Column(db.String, nullable=False)
-    username = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String, nullable=False)
-    u_neighborhood = db.Column(db.Integer, nullable=False)
+    neighborhood = db.Column(db.String, nullable=False)
 
 
     def __repr__(self):
-        return f"<User user_id={self.user_id} email={self.email} fname={self.fname}>"
+        """Show info about user"""
+        return f"<User user_id={self.user_id} email={self.email} fname={self.fname} neighborhood={self.neighborhood}>"
 
 
 
-class Report(db.Model):
-    """A report"""
+class Official(db.Model):
+    """A official report"""
 
-    __tablename__ = "reports"
+    __tablename__ = "officials"
 
-    report_id = db.Column(db.Integer, 
+    official_id = db.Column(db.Integer, 
                         primary_key=True, 
                         autoincrement=True)
-    report_title = db.Column(db.String, nullable=False)
+    title = db.Column(db.String, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    report_datetime = db.Column(db.DateTime, nullable=False)
+    incident_datetime = db.Column(db.DateTime, nullable=False) #when did it happen
     neighborhood = db.Column(db.String, nullable=False)
-    user_report_id = db.Column(db.Integer, db.ForeignKey("user_reports.user_report_id"))
-
-
-
+    comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
+    
+    # comment =  db.relationship("Comment", backref="officials")
 
     def __repr__(self):
-        return f"<Report report_id={self.report_id} report_title={self.report_title} description={self.description} report_datetime={self.report_datetime} user_report_id={self.user_report_id}>"
+        """Show info about report"""
+        return f"<Official official_id={self.official_id} title={self.title} description={self.description} incident_datetime={self.incident_datetime}>"
 
 
 
-class UserReport(db.Model):
-    """A user report"""
+class Unofficial(db.Model):
+    """A unofficial report"""
 
-    __tablename__ = "user_reports"
+    __tablename__ = "unofficials"
 
-    user_report_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    incident_title = db.Column(db.String, nullable=False)
+    unofficial_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String, nullable=False)
     incident = db.Column(db.Text, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False)
-    incident_datetime = db.Column(db.DateTime, nullable=False)
+    neighborhood = db.Column(db.String, nullable=False)
+    incident_datetime = db.Column(db.DateTime, nullable=False) #don't use datetime.now()
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
+    
+    user = db.relationship("User", backref="unofficials")
+
+    def __repr__(self):
+        """Show info about unofficial report"""
+        return f"<Unofficial title={self.title} incident={self.incident} created_on={self.created_on} incident_datetime={self.incident_datetime} user_id={self.user_id}>"
+
+
+
+class Comment(db.Model):
+    """A comment"""
+
+    __tablename__ = "comments"
+
+    comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    content = db.Column(db.String, nullable=False)
+    created_on =db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    official_id = db.Column(db.Integer, db.ForeignKey("officials.official_id"))
+    unofficial_id = db.Column(db.Integer, db.ForeignKey("unofficials.unofficial_id"))
+
+    user = db.relationship("User", backref="comments")
+    unofficial = db.relationship("Unofficial", backref="comments")
+    official = db.relationship("Official", backref="comments")
 
 
     def __repr__(self):
-        return f"<UserReport incident_title={self.incident_title} incident={self.incident} incident_datetime={self.incident_datetime} user_id{self.user_id}>"
+        """Show comments"""
+        return f'<Comment comment_id={self.comment_id} content={self.content} created_on={self.created_on} user_id={self.user_id} unofficial={self.unofficial} official={self.official}>'
 
 
 
-def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
+
+def connect_to_db(flask_app, db_uri='postgresql:///reports', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

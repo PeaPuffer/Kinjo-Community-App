@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, User, Report, UserReport, connect_to_db
+from model import db, User, Unofficial, Official, Comment, connect_to_db
 
 
 
