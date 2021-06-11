@@ -22,6 +22,8 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     neighborhood = db.Column(db.String, nullable=False)
 
+    #comments = a list of Comment objects (db.relationship)
+
 
     def __repr__(self):
         """Show info about user"""
@@ -41,9 +43,11 @@ class Official(db.Model):
     description = db.Column(db.Text, nullable=False)
     incident_datetime = db.Column(db.DateTime, nullable=False) #when did it happen
     neighborhood = db.Column(db.String, nullable=False)
-    comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
+    # comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
     
-    # comment =  db.relationship("Comment", backref="officials")
+    #comments = a list of Comment objects (db.relationship)
+    comment = db.relationship("Comment", backref="officials")
+
 
     def __repr__(self):
         """Show info about report"""
@@ -63,9 +67,12 @@ class Unofficial(db.Model):
     neighborhood = db.Column(db.String, nullable=False)
     incident_datetime = db.Column(db.DateTime, nullable=False) #don't use datetime.now()
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
+    # comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
     
+    #comments = a list of Comment objects (db.relationship)
+
     user = db.relationship("User", backref="unofficials")
+    comment = db.relationship("Comment", backref="unofficials")
 
     def __repr__(self):
         """Show info about unofficial report"""
@@ -86,13 +93,13 @@ class Comment(db.Model):
     unofficial_id = db.Column(db.Integer, db.ForeignKey("unofficials.unofficial_id"))
 
     user = db.relationship("User", backref="comments")
-    unofficial = db.relationship("Unofficial", backref="comments")
-    official = db.relationship("Official", backref="comments")
+    # unofficial = db.relationship("Unofficial", backref="comments")
+    # official = db.relationship("Official", backref="comments")
 
 
     def __repr__(self):
         """Show comments"""
-        return f'<Comment comment_id={self.comment_id} content={self.content} created_on={self.created_on} user_id={self.user_id} unofficial={self.unofficial} official={self.official}>'
+        return f'<Comment comment_id={self.comment_id} content={self.content} created_on={self.created_on} user_id={self.user_id} unofficial={self.unofficial_id} official={self.official_id}>'
 
 
 
@@ -111,7 +118,7 @@ def connect_to_db(flask_app, db_uri='postgresql:///reports', echo=True):
 
 if __name__ == '__main__':
     from server import app
-
+    print("We're in model.py file")
     connect_to_db(app)
 
 
