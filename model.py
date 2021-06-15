@@ -76,7 +76,7 @@ class Unofficial(db.Model):
 
     def __repr__(self):
         """Show info about unofficial report"""
-        return f"<Unofficial title={self.title} incident={self.incident} created_on={self.created_on} incident_datetime={self.incident_datetime} user_id={self.user_id}>"
+        return f"<Unofficial unofficial_id={self.unofficial_id} title={self.title} incident={self.incident} created_on={self.created_on} incident_datetime={self.incident_datetime} user_id={self.user_id}>"
 
 
 

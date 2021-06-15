@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, User, Unofficial, Official, Comment
+from model import db, User, Unofficial, Official, Comment#, connect_to_db
 from datetime import datetime
 from flask import session
 
@@ -17,6 +17,24 @@ def create_user(fname, lname, email, password, neighborhood):
     db.session.commit()
 
     return user
+
+
+def get_users():
+    """Return all users"""
+
+    return User.query.all()
+
+   
+def get_user_by_id(user_id):
+    """Return user by primary key"""
+
+    return User.query.get(user_id)
+
+
+def get_user_by_email(email):
+    """ Return a user by email"""
+
+    return User.query.filter(User.email==email).first()
 
 
 def create_unofficial(title, incident, created_on, neighborhood, incident_dateime, user):
@@ -79,6 +97,16 @@ def view_all_officials():
     """View all official reports"""
 
     return Official.query.all()
+
+
+def get_unofficial_by_id():
+    """Get details on a unofficial report by primary key"""
+
+    return Unofficial.query.get(unofficial_id)
+
+
+
+
 
 
 

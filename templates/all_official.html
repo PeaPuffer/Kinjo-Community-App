@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}All Official Reported Incidents{% endblock %}
+
+{% block body %}
+{% for official in officials %}
+    <p>{{official}}</p>
+
+{% endfor %}
+{% endblock %}

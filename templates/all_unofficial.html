@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}All Unofficial Reports{% endblock %}
+
+{% block body %}
+{% for unofficial in unofficials %}
+    <p>{{unofficial}}</p>
+
+{% endfor %}
+{% endblock %}
