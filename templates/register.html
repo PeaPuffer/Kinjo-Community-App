@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Account Registration{% endblock %}
+
+{% block body %}
+<h1>Account Registration</h1>
+
+<form action="/register" method="POST">
+  <p>First Name <input type="text" name="fname"></p>
+  <p>Last Name <input type="text" name="lname"></p>
+  <p>Email <input type="text" name="email"></p>
+  <p>Password <input type="password" name="password"></p>
+  <p>Neighborhood <input type="text" name="neighborhood"></p>
+  <p>
+    <input type="submit">
+  </p>
+</form>
+
+{% endblock %}

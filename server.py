@@ -17,6 +17,14 @@ def homepage():
 
     return render_template('homepage.html')
 
+@app.route("/users")
+def all_users():
+    """View all users."""
+
+    users = crud.get_users()
+
+    return render_template("all_users.html", users=users)   
+
 
 @app.route('/register')
 def register():
@@ -31,15 +39,15 @@ def register_user():
 
     fname = request.form.get('fname')
     lname = request.form.get('lname')
-    neighborhood = request.form.get('neighborhood')
     email = request.form.get('email')
     password = request.form.get('password')
+    neighborhood = request.form.get('neighborhood')
 
-    user = crud.get_user_by_email(email)
-    if user:
+    new_user = crud.get_user_by_email(email)
+    if new_user:
         flash("This email has already been registered. Try another email.")
     else:
-        crud.create_user(fname, lname, neighborhood, email, password)
+        crud.create_user(fname, lname, email, password, neighborhood)
         flash("Successfully Registered!")
 
     return redirect('/')
