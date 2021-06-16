@@ -11,11 +11,14 @@ app.secret_key = "dev"
 app.jinja_env.undefined=StrictUndefined
 connect_to_db(app)
 
+### HOMEPAGE ##################################################
+
 @app.route('/')
 def homepage():
     """View homepage."""
 
     return render_template('homepage.html')
+
 
 @app.route("/users")
 def all_users():
@@ -25,6 +28,8 @@ def all_users():
 
     return render_template("all_users.html", users=users)   
 
+
+### USER REGISTRATION ##########################################
 
 @app.route('/register')
 def register():
@@ -45,7 +50,7 @@ def register_user():
 
     new_user = crud.get_user_by_email(email)
     if new_user:
-        flash("This email has already been registered. Try another email.")
+        flash("This email is already in use. Please try a different email.")
     else:
         crud.create_user(fname, lname, email, password, neighborhood)
         flash("Successfully Registered!")
@@ -79,6 +84,39 @@ def all_official():
 
     return render_template("all_official.html", officials=officials)
 
+
+### LOGIN #####################################################
+
+app.route("/login", methods=["POST"])
+def login():
+    """User login."""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    user = crud.get_user_by_email(email)
+    if not user or user.password != password:
+        flash("Incorrect email or password entered. Please try again.")
+    else:
+        session["user_email"] = user.email
+        flash(f"Welcome back, {user.email}!")
+    
+    # return redirect('/profile')
+
+
+### LOGOUT ####################################################
+ 
+@app.route('/logout')
+def logout():
+    """User logout"""
+    print(session)
+
+    if session['user_id']:
+        session.pop('user_id')
+        flash("Logout Successful")
+    else:
+        flash("Please Login")
+    return redirect("/")
 
 
 
