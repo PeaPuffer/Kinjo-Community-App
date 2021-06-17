@@ -7,7 +7,7 @@ from jinja2 import StrictUndefined
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = "dev"
+app.secret_key = "DATASF"
 app.jinja_env.undefined=StrictUndefined
 connect_to_db(app)
 
@@ -20,7 +20,7 @@ def homepage():
     return render_template('homepage.html')
 
 
-@app.route("/users")
+@app.route('/users')
 def all_users():
     """View all users."""
 
@@ -29,7 +29,7 @@ def all_users():
     return render_template("all_users.html", users=users)   
 
 
-### USER REGISTRATION ##########################################
+### USER REGISTRATION #########################################
 
 @app.route('/register')
 def register():
@@ -50,13 +50,16 @@ def register_user():
 
     new_user = crud.get_user_by_email(email)
     if new_user:
-        flash("This email is already in use. Please try a different email.")
+        flash(f"This email is already in use. Please try a different email.")
+        return redirect('/register')
     else:
         crud.create_user(fname, lname, email, password, neighborhood)
-        flash("Successfully Registered!")
+        flash(f"Successfully Registered!")
 
     return redirect('/')
 
+
+### UNOFFICIAL REPORTS #####################################################
 
 @app.route('/unofficials')
 def all_unofficial():
@@ -76,6 +79,8 @@ def get_unofficial(unofficial_id):
     return render_template('unofficial_details.html', unofficial=unofficial)
 
 
+### OFFICIAL REPORTS #####################################################
+
 @app.route('/officials')
 def all_official():
     """View all official reports"""
@@ -87,7 +92,7 @@ def all_official():
 
 ### LOGIN #####################################################
 
-app.route("/login", methods=["POST"])
+@app.route("/login", methods=["POST"])
 def login():
     """User login."""
 
@@ -96,12 +101,13 @@ def login():
 
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
-        flash("Incorrect email or password entered. Please try again.")
+        flash(f"There was an error with your email and/or password. Please try again.")
     else:
         session["user_email"] = user.email
         flash(f"Welcome back, {user.email}!")
     
     # return redirect('/profile')
+    return redirect('/')
 
 
 ### LOGOUT ####################################################
@@ -113,9 +119,9 @@ def logout():
 
     if session['user_id']:
         session.pop('user_id')
-        flash("Logout Successful")
+        flash(f"You have successfully logged out.")
     else:
-        flash("Please Login")
+        flash(f"Please Login")
     return redirect("/")
 
 
