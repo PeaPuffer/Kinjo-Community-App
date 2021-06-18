@@ -11,6 +11,8 @@ app.secret_key = "DATASF"
 app.jinja_env.undefined=StrictUndefined
 connect_to_db(app)
 
+
+
 ### HOMEPAGE ##################################################
 
 @app.route('/')
@@ -59,7 +61,7 @@ def register_user():
     return redirect('/')
 
 
-### UNOFFICIAL REPORTS #####################################################
+### UNOFFICIAL REPORTS #########################################
 
 @app.route('/unofficials')
 def all_unofficial():
@@ -79,7 +81,7 @@ def get_unofficial(unofficial_id):
     return render_template('unofficial_details.html', unofficial=unofficial)
 
 
-### OFFICIAL REPORTS #####################################################
+### OFFICIAL REPORTS ###########################################
 
 @app.route('/officials')
 def all_official():

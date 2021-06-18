@@ -4,6 +4,9 @@ from model import db, User, Unofficial, Official, Comment#, connect_to_db
 from datetime import datetime
 from flask import session
 
+
+### USER #################################################################
+
 def create_user(fname, lname, email, password, neighborhood):
     """Create and return new user"""
 
@@ -36,6 +39,14 @@ def get_user_by_email(email):
 
     return User.query.filter(User.email==email).first()
 
+def view_all_users():
+    """View all users"""
+
+    return User.query.all()
+
+
+
+### UNOFFICIAL ###########################################################
 
 def create_unofficial(title, incident, created_on, neighborhood, incident_dateime, user):
     """Create and return unofficial report"""
@@ -53,19 +64,19 @@ def create_unofficial(title, incident, created_on, neighborhood, incident_dateim
     return unofficial
 
 
-def create_comment(content, created_on, user, official_id, unofficial_id):
-    """Create and return user comment"""
+def view_all_unofficials():
+    """View all unofficial reports"""
 
-    comment = Comment(content=content,
-                created_on=datetime.now(),
-                user=user,
-                official=official,
-                unofficial=unofficial)
+    return Unofficial.query.all()    
 
-    db.session.add(unofficial)
-    db.session.commit()
 
-    return comment
+def get_unofficial_by_id():
+    """Get details on a unofficial report by primary key"""
+
+    return Unofficial.query.get(unofficial_id)
+
+
+### OFFICIAL #############################################################
 
 def get_official(title, description, incident_datetime, neighborhood):
     """Get and return official report"""
@@ -81,29 +92,27 @@ def get_official(title, description, incident_datetime, neighborhood):
     return official        
               
 
-def view_all_users():
-    """View all users"""
-
-    return User.query.all()
-
-
-def view_all_unofficials():
-    """View all unofficial reports"""
-
-    return Unofficial.query.all()    
-
-
 def view_all_officials():
     """View all official reports"""
 
     return Official.query.all()
 
 
-def get_unofficial_by_id():
-    """Get details on a unofficial report by primary key"""
+### COMMENT ##############################################################
 
-    return Unofficial.query.get(unofficial_id)
+def create_comment(content, created_on, user, official_id, unofficial_id):
+    """Create and return user comment"""
 
+    comment = Comment(content=content,
+                created_on=datetime.now(),
+                user=user,
+                official=official,
+                unofficial=unofficial)
+
+    db.session.add(unofficial)
+    db.session.commit()
+
+    return comment
 
 
 
