@@ -7,7 +7,10 @@ from jinja2 import StrictUndefined
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = "DATASF"
+
+app.secret_key = 'dev'
+API_KEY = os.environ['DATASF']
+
 app.jinja_env.undefined=StrictUndefined
 connect_to_db(app)
 
@@ -79,6 +82,30 @@ def get_unofficial(unofficial_id):
     unofficial = crud.get_unofficial_by_id(unofficial_id)
 
     return render_template('unofficial_details.html', unofficial=unofficial)
+
+
+@app.route('/user_incident')
+def user_incident():
+    """User unofficial incident report"""
+
+    return render_template('incident_report.html', unofficial=unofficial)
+
+
+@app.route('/incident_report', methods=["POST"])
+def new_incident():
+    """Creating a new unofficial report"""
+
+    logged_in_email = session.get("user_email")
+
+    if logged_in_email is None:
+        flash(f'Please log in to submit an incident')
+    
+    else: 
+        user = crud.get_user_by_email(logged_in_email)
+        # unofficial = crud.
+
+    
+    return redirect('/unofficials')
 
 
 ### OFFICIAL REPORTS ###########################################
