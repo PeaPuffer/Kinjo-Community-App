@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}User Homepage{% endblock %}
+
+{% block body %}
+
+{% if session.get("user_email") %}
+
+<h1>User Homepage</h1>
+
+<form action='/profile', methods="GET"></form>
+
+
+
+{% endif %}
+{% endblock %}

@@ -4,11 +4,12 @@
 {% block body %}
   <h1>Welcome to Kinjo!</h1>
 
-  <h2>Your neighborhood safety app</h2>
+  <h2>Navbar</h2>
   <ul>
     <li><a href="/officials">View all official reports</a></li>
     <li><a href="/unofficials">View all unofficial reports</a></li>
-    <li><a href="/users">View all users</a></li>
+    <li><a href="/users">View all users</a></li> <!--for quick ref, remove later -->
+    <li><a href="/incident_report">Submit an incident</a></li>
   </ul>
 
   <br/>
@@ -16,11 +17,11 @@
   <h2>Log In</h2>
   <form action="/login" method="POST">
     <p>
-      Email <input type="text" name="email">
+      Email <input type="text" name="email" required>
     </p>
 
     <p>
-      Password <input type="password" name="password">
+      Password <input type="password" name="password" required>
     </p>
 
     <p>

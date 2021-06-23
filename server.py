@@ -9,7 +9,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 app.secret_key = 'dev'
-API_KEY = os.environ['DATASF']
+# API_KEY = os.environ['DATASF_KEY']
 
 app.jinja_env.undefined=StrictUndefined
 connect_to_db(app)
@@ -63,6 +63,12 @@ def register_user():
 
     return redirect('/')
 
+@app.route('/profile')
+def profile():
+    """User profile"""
+
+    return render_template('profile.html') #saved_neighbhorhoood.html or saved_unofficial/official
+
 
 ### UNOFFICIAL REPORTS #########################################
 
@@ -84,11 +90,11 @@ def get_unofficial(unofficial_id):
     return render_template('unofficial_details.html', unofficial=unofficial)
 
 
-@app.route('/user_incident')
+@app.route('/incident_report')
 def user_incident():
     """User unofficial incident report"""
 
-    return render_template('incident_report.html', unofficial=unofficial)
+    return render_template('incident_reports.html')
 
 
 @app.route('/incident_report', methods=["POST"])
@@ -97,15 +103,22 @@ def new_incident():
 
     logged_in_email = session.get("user_email")
 
-    if logged_in_email is None:
-        flash(f'Please log in to submit an incident')
-    
-    else: 
-        user = crud.get_user_by_email(logged_in_email)
-        # unofficial = crud.
+    title = request.form.get("title")
+    incident = request.form.get("incident")
+    created_on = request.form.get("created_on")
+    neighborhood = request.form.get("neighborhood")
+    incident_datetime = request.form.get("incident_datetime")
 
     
-    return redirect('/unofficials')
+    if logged_in_email is None:
+        flash(f'Please log in to submit an incident')
+        return redirect('/')
+    else: 
+        user = crud.get_user_by_email(logged_in_email)
+        crud.create_unofficial(title, incident, created_on, neighborhood, incident_datetime, user)
+        return redirect('/unofficials')
+    
+    
 
 
 ### OFFICIAL REPORTS ###########################################
@@ -119,7 +132,17 @@ def all_official():
     return render_template("all_official.html", officials=officials)
 
 
-### LOGIN #####################################################
+### OFFICIAL REPORTS API #######################################
+
+@app.route('/search', methods=["GET"])
+def search_reports():
+    """Search for reports"""
+
+
+
+    return redirect('/')
+
+### LOGIN ######################################################
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -131,12 +154,11 @@ def login():
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
         flash(f"There was an error with your email and/or password. Please try again.")
+        return redirect('/')
     else:
         session["user_email"] = user.email
-        flash(f"Welcome back, {user.email}!")
-    
-    # return redirect('/profile')
-    return redirect('/')
+        flash(f"Welcome back, {user.fname}!")
+        return redirect('/profile')
 
 
 ### LOGOUT ####################################################
