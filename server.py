@@ -5,11 +5,12 @@ from model import connect_to_db
 import crud
 from jinja2 import StrictUndefined
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
 app.secret_key = 'dev'
-# API_KEY = os.environ['DATASF_KEY']
+API_KEY = os.environ['DATASF_KEY']
 
 app.jinja_env.undefined=StrictUndefined
 connect_to_db(app)
@@ -102,6 +103,7 @@ def new_incident():
     """Creating a new unofficial report"""
 
     logged_in_email = session.get("user_email")
+    
 
     title = request.form.get("title")
     incident = request.form.get("incident")
@@ -136,7 +138,7 @@ def all_official():
 
 @app.route('/search', methods=["GET"])
 def search_reports():
-    """Search for reports"""
+    """Search for official reports"""
 
 
 
@@ -168,8 +170,8 @@ def logout():
     """User logout"""
     print(session)
 
-    if session['user_id']:
-        session.pop('user_id')
+    if session['user_email']:
+        session.pop('user_email')
         flash(f"You have successfully logged out.")
     else:
         flash(f"Please Login")

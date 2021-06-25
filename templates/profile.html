@@ -6,6 +6,9 @@
 {% if session.get("user_email") %}
 
 <h1>User Homepage</h1>
+<ul>
+    <li><a href="/incident_report">Submit an incident</a></li>
+</ul>
 
 <form action='/profile', methods="GET"></form>
 
