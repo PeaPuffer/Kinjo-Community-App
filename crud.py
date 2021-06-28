@@ -53,7 +53,7 @@ def create_unofficial(title, incident, created_on, neighborhood, incident_dateti
 
     unofficial = Unofficial(title=title,
                     incident=incident,
-                    created_on=created_on,
+                    created_on=datetime.now(),
                     neighborhood=neighborhood,
                     incident_datetime=incident_datetime,
                     user=user)

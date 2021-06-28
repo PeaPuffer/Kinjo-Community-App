@@ -2,8 +2,21 @@
 {% block title %}All Unofficial Reports{% endblock %}
 
 {% block body %}
-{% for unofficial in unofficials %}
+    <h1>All Unofficial Reports</h1>
+
+    <ul>
+        {% for unofficial in unofficials %}
+          <li>
+            <a href="/unofficials/{{ unofficial.unofficial_id }}">
+              {{ unofficial.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+
+<!-- {% for unofficial in unofficials %}
     <p>{{unofficial}}</p>
 
-{% endfor %}
+    {% endfor %} -->
+
 {% endblock %}
