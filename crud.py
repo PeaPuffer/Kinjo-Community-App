@@ -70,7 +70,7 @@ def view_all_unofficials():
     return Unofficial.query.all()    
 
 
-def get_unofficial_by_id():
+def get_unofficial_by_id(unofficial_id):
     """Get details on a unofficial report by primary key"""
 
     return Unofficial.query.get(unofficial_id)
