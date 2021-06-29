@@ -5,7 +5,10 @@
     <h3>Search Results:</h3>
     <ul>
         {% for incident in incidents %}
-        
+            <li>
+                {{incident['incident_datetime']}} - {{incident['incident_description']}} - {{incident['analysis_neighborhood']}}
+            </li>    
+        {% endfor %}  
     </ul>
 
     </form>

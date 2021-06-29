@@ -161,9 +161,12 @@ def search_officials():
     incidents = []
     for incident in data:
         incidents.append(incident)
+    
+    # if incident == " ":
+    #     payload = {'key': API_KEY, 'source': 'title', "incidents":incidents}
 
 
-    return render_template('search_officials.html', incidents=incidents)
+    return render_template('search_officials.html', incidents=incidents, title=title)
 
 
 ## create a request to have all_official reports shown
