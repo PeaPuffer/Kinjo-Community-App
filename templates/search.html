@@ -2,15 +2,25 @@
 {% block title %}Search{% endblock %}
 
 {% block body %}
-    <form action='/search_officials'>
+    <form action='/search', method='POST'>
         Search for an incident: 
         
         <input 
         type='text' 
-        name='incident'>
+        name='incident'
+        id='search'>
 
     
         
         <input type="submit" value="Submit">
     </form>
+
+    <ul>
+        {% for incident in incidents %}
+            <li>
+                {{incident['incident_datetime']}} - {{incident['incident_description']}}
+        
+            </li>    
+        {% endfor %}  
+    </ul>
 {% endblock %}

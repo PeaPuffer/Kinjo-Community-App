@@ -135,14 +135,43 @@ def all_official():
 
 ###** OFFICIAL REPORTS API **#######################################
 
-@app.route('/search', methods=["GET"])
+@app.route('/search')
+def display_search():
+
+    incidents = []
+    
+    return render_template('search.html', incidents=incidents)
+
+@app.route('/search', methods=['POST'])
 def search_reports():
     """Search for official reports"""
 
     incidents = crud.get_official_report()
 
 
-    return render_template("search.html", incidents=incidents)
+    print("In search route")
+
+    url = 'https://data.sfgov.org/resource/wg3w-h783.json'
+    payload = {'$$app_token': API_KEY}         
+    res = requests.get(url, params=payload)
+    data = res.json()
+
+    #grab user search input #need .title()
+    search = request.form.get("incident")
+    print(search)
+    print("*"*20)
+    incident_dict = {}
+    for incident in data:
+        incident_dict[incident['incident_description']] = []
+    incidents = []
+    for incident in data:
+        incidents.append(incident)
+        incident_dict[ incident['incident_description'] ].append(incident)
+
+    search_incidents = incident_dict[search]
+    print('search incidents', search_incidents)
+    return render_template("search.html", incidents=search_incidents)
+
 
 @app.route('/search_officials')
 def search_officials():
@@ -154,13 +183,18 @@ def search_officials():
     neighborhood = request.args.get('analysis_neighborhood', '')
 
     url = 'https://data.sfgov.org/resource/wg3w-h783.json'
-    payload = {'$$app_token': API_KEY}
+    payload = {'$$app_token': API_KEY}         
     res = requests.get(url, params=payload)
     data = res.json()
     #retreives individual incidents ex: data[0]
+    incident_dict = {}
+    for incident in data:
+        incident_dict[incident['incident_description']] = []
     incidents = []
     for incident in data:
         incidents.append(incident)
+        incident_dict[ incident['incident_description'] ].append(incident)
+      
     
     # if incident == " ":
     #     payload = {'key': API_KEY, 'source': 'title', "incidents":incidents}
