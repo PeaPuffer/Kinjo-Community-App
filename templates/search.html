@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+
+{% block body %}
+    <form action='/search_officials'>
+        Search for an incident: 
+        
+        <input 
+        type='text' 
+        name='incident'>
+
+    
+        {% for incident in incidents %}
+        
+        {% endfor %}    
+        <input type="submit" value="Look for events!">
+    </form>
+{% endblock %}

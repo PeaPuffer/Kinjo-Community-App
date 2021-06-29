@@ -6,6 +6,7 @@ import crud
 from jinja2 import StrictUndefined
 from datetime import datetime
 import os
+import requests
 
 app = Flask(__name__)
 
@@ -121,8 +122,6 @@ def new_incident():
         return redirect('/unofficials')
     
     
-
-
 ### OFFICIAL REPORTS ###########################################
 
 @app.route('/officials')
@@ -134,15 +133,65 @@ def all_official():
     return render_template("all_official.html", officials=officials)
 
 
-### OFFICIAL REPORTS API #######################################
+###** OFFICIAL REPORTS API **#######################################
 
 @app.route('/search', methods=["GET"])
 def search_reports():
     """Search for official reports"""
 
+    incidents = crud.get_official_report()
 
 
-    return redirect('/')
+    return render_template("search.html", incidents=incidents)
+
+@app.route('/search_officials')
+def search_officials():
+    """Search results for official reports"""
+
+    title = request.args.get('incident_subcategory', '')
+    description = request.args.get('incident_description', '')
+    incident_datetime = request.args.get('incident_datetime', '')
+    neighborhood = request.args.get('analysis_neighborhood', '')
+
+    url = 'https://data.sfgov.org/resource/wg3w-h783.json'
+    payload = {'$$app_token': API_KEY}
+    res = requests.get(url, params=payload)
+    data = res.json()
+    #retreives individual incidents ex: data[0]
+    incidents = []
+    for incident in data:
+        incidents.append(incident)
+
+
+    return render_template('search_officials.html', incidents=incidents)
+
+
+## create a request to have all_official reports shown
+# @app.route('/officials')
+# def get_all_official():
+#     """View all official reports from API"""
+
+#     url = 'https://data.sfgov.org/resource/wg3w-h783.json'
+#     payload = {'$$app_token': API_KEY}
+#     res = requests.get(url, params=payload)
+#     data = res.json
+#     
+
+#     return render_template("all_official.html", officials=officials) #(results=results)
+
+
+#detailed official reports #might not need this since the descriptions are short
+# @app.route('/officials, <official_id>', methods=["GET"])  
+# def get_official():
+#     """Get details of an official report"""
+
+#         url = 'https://data.sfgov.org/resource/wg3w-h783.json'
+#         payload = {'$$app_token': API_KEY}
+#         res = requests.get(url, params=payload)
+#         data = res.json
+
+#         return render_template("official_detail.html")
+
 
 ### LOGIN ######################################################
 

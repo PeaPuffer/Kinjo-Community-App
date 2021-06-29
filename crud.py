@@ -98,6 +98,28 @@ def view_all_officials():
     return Official.query.all()
 
 
+###** OFFICIAL API SEARCH **#########
+
+def get_official_report():
+    """Return titles of official report"""
+
+    officials = Official.query.all()
+    official_titles = []
+
+    for official_title in officials:
+        official_titles.append(official.title)
+    
+    return official_titles
+
+
+
+
+
+
+
+
+
+
 ### COMMENT ##############################################################
 
 def create_comment(content, created_on, user, official_id, unofficial_id):

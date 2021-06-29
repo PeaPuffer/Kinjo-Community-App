@@ -86,7 +86,7 @@ class Comment(db.Model):
     __tablename__ = "comments"
 
     comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    content = db.Column(db.String, nullable=False)
+    content = db.Column(db.String(150), nullable=False)
     created_on =db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     official_id = db.Column(db.Integer, db.ForeignKey("officials.official_id"))

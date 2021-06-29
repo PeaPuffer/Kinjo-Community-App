@@ -2,8 +2,17 @@
 {% block title %}All Official Reported Incidents{% endblock %}
 
 {% block body %}
-{% for official in officials %}
-    <p>{{official}}</p>
+    <h1>All Official Reports</h1>
 
-{% endfor %}
+    <ul>
+        <!-- {% for official in officials %} -->
+        <li>
+            <!-- <a href='/officials/{{official.official_id}}'> -->
+                <!-- {{ official.incident_datetime }} - {{official.title}} -->
+            </a>
+     
+        </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
