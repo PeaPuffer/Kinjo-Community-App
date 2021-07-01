@@ -8,7 +8,7 @@
         {% for unofficial in unofficials %}
           <li>
             <a href="/unofficials/{{ unofficial.unofficial_id }}">
-              {{ unofficial.incident_datetime }} - {{unofficial.title}}
+              {{ unofficial.title}} - {{ unofficial.incident_datetime }}
             </a>
           </li>
         {% endfor %}
