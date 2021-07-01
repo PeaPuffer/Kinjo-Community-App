@@ -63,7 +63,7 @@ def register_user():
         crud.create_user(fname, lname, email, password, neighborhood)
         flash(f"Successfully Registered!")
 
-    return redirect('/')
+    return redirect('/login')
 
 @app.route('/profile')
 def profile():
@@ -135,6 +135,8 @@ def all_official():
     return render_template("all_official.html", officials=officials)
 
 
+
+
 ###** OFFICIAL REPORTS API **#######################################
 
 @app.route('/search')
@@ -178,7 +180,7 @@ def search_reports():
 
 @app.route('/search_officials')
 def search_officials():
-    """Search results for official reports"""
+    """Search results for all official reports"""
 
     title = request.args.get('incident_subcategory', '')
     description = request.args.get('incident_description', '')
@@ -251,6 +253,13 @@ def add_comment_from_unofficials(unofficial_id):
 
 ### LOGIN ######################################################
 
+@app.route("/login")
+def user_login():
+    """Display login page."""
+
+    return render_template("login.html")
+
+
 @app.route("/login", methods=["POST"])
 def login():
     """User login."""
@@ -261,7 +270,7 @@ def login():
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
         flash(f"There was an error with your email and/or password. Please try again.")
-        return redirect('/')
+        return redirect('/login')
     else:
         session["user_email"] = user.email
         flash(f"Welcome back, {user.fname}!")
@@ -281,9 +290,6 @@ def logout():
     else:
         flash(f"Please Login")
     return redirect("/")
-
-
-
 
 
 if __name__=='__main__':

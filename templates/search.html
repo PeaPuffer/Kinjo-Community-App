@@ -18,8 +18,8 @@
     <ul>
         {% for incident in incidents %}
             <li>
-                {{incident['incident_datetime']}} - {{incident['incident_description']}}
-        
+                {{incident['report_datetime']}} - {{incident['incident_description']}} -
+                {{incident['analysis_neighborhood']}} - {{incident['incident_category']}}
             </li>    
         {% endfor %}  
     </ul>

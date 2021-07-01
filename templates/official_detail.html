@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
-<!-- {% block title %}{{ unofficial.title }} - Details{% endblock %} -->
+{% block title %}{{ unofficial.title }} - Details{% endblock %}
 
 {% block body %}
-<!-- <h1>{{ unofficial.title }}</h1> -->
+<h1>{{incident['incident_category']}}</h1>
 
 <p>
-  <!-- {{ unofficial.incident }} -->
+  {{incident['incident_subcategory']}}
 </p>
 
 {% endblock %}
+
+<li>
+  {{incident['incident_datetime']}} - {{incident['incident_description']}} -
+  {{incident['analysis_neighborhood']}} - {{incident['incident_category']}}
+</li>    

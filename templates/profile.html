@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
-{% block title %}User Homepage{% endblock %}
+{% block title %}User Profile{% endblock %}
 
 {% block body %}
 
 {% if session.get("user_email") %}
 
-<h1>User Homepage</h1>
+<h1>User Profile</h1>
+
 <ul>
+    <li></li>
     <li><a href="/incident_report">Submit an incident</a></li>
 </ul>
 
