@@ -3,10 +3,32 @@
 {% block title %}{{ unofficial.title }} - Details{% endblock %}
 
 {% block body %}
+
+
+
 <h1>{{ unofficial.title }}</h1>
 
-<p>
-  {{ unofficial.incident }}
-</p>
+  <p>
+    Description: {{ unofficial.incident }}
+  </p>
+  <p>
+    Neighborhood: {{ unofficial.neighborhood }}
+  </p>
+  <p>
+    Incident Datetime: {{ unofficial.incident_datetime }}
+  </p>
+
+<h4>Comments</h4>
+    
+      <h4>Write a comment</h4>
+        <p>
+          <form action="/unofficials/{{unofficial.unofficial_id}}/comment" method="POST">
+            <textarea name="comment" id="comment"> </textarea>
+              <br />
+            <input type="submit" value="Save" title="Comment">    
+          </form>
+        </p>
+
 
 {% endblock %}
+

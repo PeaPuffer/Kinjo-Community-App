@@ -88,8 +88,9 @@ def get_unofficial(unofficial_id):
     """Get details of a unofficial reports"""
 
     unofficial = crud.get_unofficial_by_id(unofficial_id)
+    comments = crud.get_comments_by_unofficial_id(unofficial_id)
 
-    return render_template('unofficial_details.html', unofficial=unofficial)
+    return render_template('unofficial_details.html', unofficial=unofficial, comments=comments)
 
 
 @app.route('/incident_report')
@@ -120,6 +121,7 @@ def new_incident():
         user = crud.get_user_by_email(logged_in_email)
         crud.create_unofficial(title, incident, created_on, neighborhood, incident_datetime, user)
         return redirect('/unofficials')
+
     
     
 ### OFFICIAL REPORTS ###########################################
@@ -141,6 +143,7 @@ def display_search():
     incidents = []
     
     return render_template('search.html', incidents=incidents)
+
 
 @app.route('/search', methods=['POST'])
 def search_reports():
@@ -228,6 +231,22 @@ def search_officials():
 #         data = res.json
 
 #         return render_template("official_detail.html")
+
+
+### COMMENT ####################################################
+
+@app.route("/unofficials/<unofficial_id>/comment", methods=['GET'])
+def add_comment_from_unofficials(unofficial_id):
+
+    unofficial = crud.get_unofficial(unofficial_id)
+    if not unofficial:
+        return redirect('/')
+    
+    user_id = session['user_id']
+    comment = request.form.get("comment")
+
+    crud.create_comment(content="comment", created_on=datetime.now(), user_id=user_id, unofficial_id=unofficial_id)
+    return redirect(f"/unofficials/{unofficial_id}")
 
 
 ### LOGIN ######################################################

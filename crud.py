@@ -64,6 +64,11 @@ def create_unofficial(title, incident, created_on, neighborhood, incident_dateti
     return unofficial
 
 
+def get_unofficial(unofficial_id):
+    """ """
+    return Unofficial.query.filter(Unofficial.unofficial_id == unofficial_id).first()
+
+
 def view_all_unofficials():
     """View all unofficial reports"""
 
@@ -122,19 +127,35 @@ def get_official_report():
 
 ### COMMENT ##############################################################
 
-def create_comment(content, created_on, user, official_id, unofficial_id):
+def create_comment(content, created_on, user_id, unofficial_id):
     """Create and return user comment"""
 
-    comment = Comment(content=content,
+    u_comment = Comment(content=content,
                 created_on=datetime.now(),
-                user=user,
-                official=official,
-                unofficial=unofficial)
+                user_id=user_id,
+                unofficial_id=unofficial_id)
 
-    db.session.add(unofficial)
+    db.session.add(u_comment)
     db.session.commit()
 
-    return comment
+    return u_comment
+
+
+def get_comments_by_unofficial_id(unofficial_id):
+    """Return user comment in unofficial reports"""
+
+    return Comment.query.filter(Comment.unofficial_id == unofficial_id).all()
+
+
+def delete_comment(user_id, comment_id):
+    """Delete user comment"""
+
+    u_comment = (Comment.query.filter(Comment.user_id == user_id).filter(Comment.comment_id == comment_id).first())
+
+    db.session.delete(u_comment)
+    db.session.commit()
+    
+
 
 
 

@@ -93,7 +93,7 @@ class Comment(db.Model):
     unofficial_id = db.Column(db.Integer, db.ForeignKey("unofficials.unofficial_id"))
 
     user = db.relationship("User", backref="comments")
-    # unofficial = db.relationship("Unofficial", backref="comments")
+    unofficial = db.relationship("Unofficial", backref="comments")
     # official = db.relationship("Official", backref="comments")
 
 
