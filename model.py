@@ -46,7 +46,7 @@ class Official(db.Model):
     # comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
     
     #comments = a list of Comment objects (db.relationship)
-    comment = db.relationship("Comment", backref="officials")
+    # comment = db.relationship("Comment", backref="officials")
 
 
     def __repr__(self):
@@ -87,19 +87,18 @@ class Comment(db.Model):
 
     comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.String(150), nullable=False)
-    created_on =db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-    official_id = db.Column(db.Integer, db.ForeignKey("officials.official_id"))
+    # official_id = db.Column(db.Integer, db.ForeignKey("officials.official_id"))
     unofficial_id = db.Column(db.Integer, db.ForeignKey("unofficials.unofficial_id"))
 
-    user = db.relationship("User", backref="comments")
-    unofficial = db.relationship("Unofficial", backref="comments")
+    # user = db.relationship("User", backref="comments")
+    # unofficial = db.relationship("Unofficial", backref="comments")
     # official = db.relationship("Official", backref="comments")
 
 
     def __repr__(self):
         """Show comments"""
-        return f'<Comment comment_id={self.comment_id} content={self.content} created_on={self.created_on} user_id={self.user_id} unofficial={self.unofficial_id} official={self.official_id}>'
+        return f'<Comment comment_id={self.comment_id} content={self.content} user_id={self.user_id} unofficial_id={self.unofficial_id}>'
 
 
 

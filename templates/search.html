@@ -5,21 +5,16 @@
     <form action='/search', method='POST'>
         Search for an incident: 
         
-        <input 
-        type='text' 
-        name='incident'
-        id='search'>
+        <input type='text' name='incident' id='search'>
 
-    
-        
         <input type="submit" value="Submit">
     </form>
 
     <ul>
         {% for incident in incidents %}
             <li>
-                {{incident['report_datetime']}} - {{incident['incident_description']}} -
-                {{incident['analysis_neighborhood']}} - {{incident['incident_category']}}
+                <a href='/official_detail/{{ incident['incident_id'] }}'> {{incident['report_datetime']}} - {{incident['incident_description']}} -
+                {{incident['analysis_neighborhood']}} - {{incident['incident_category']}}</a>
             </li>    
         {% endfor %}  
     </ul>

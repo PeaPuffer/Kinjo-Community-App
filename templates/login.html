@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Kinjo - Login{% endblock %}
+
+{% block body %}
+  <h1>Kinjo</h1>
+
+  <h2></h2>
+  
+  <h2>Log In</h2>
+  <form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="email" required>
+    </p>
+
+    <p>
+      Password <input type="password" name="password" required>
+    </p>
+
+    <p>
+      <input type="submit" value="Login">
+    </p>
+  </form>
+
+  <h4>New to Kinjo? <a href="/register">Register!</a></h4>
+
+
+{% endblock %}

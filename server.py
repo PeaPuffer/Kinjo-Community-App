@@ -135,8 +135,6 @@ def all_official():
     return render_template("all_official.html", officials=officials)
 
 
-
-
 ###** OFFICIAL REPORTS API **#######################################
 
 @app.route('/search')
@@ -178,34 +176,33 @@ def search_reports():
     return render_template("search.html", incidents=search_incidents)
 
 
-@app.route('/search_officials')
-def search_officials():
-    """Search results for all official reports"""
-
-    title = request.args.get('incident_subcategory', '')
-    description = request.args.get('incident_description', '')
-    incident_datetime = request.args.get('incident_datetime', '')
-    neighborhood = request.args.get('analysis_neighborhood', '')
+@app.route('/official_detail/<incident_id>')
+def official_detail(incident_id):
+    """Search results for individual official reports"""
 
     url = 'https://data.sfgov.org/resource/wg3w-h783.json'
-    payload = {'$$app_token': API_KEY}         
+    payload = {'$$app_token': API_KEY,
+                "incident_id": incident_id
+    }         
     res = requests.get(url, params=payload)
     data = res.json()
+    print('!'*20)
+    print(data)
     #retreives individual incidents ex: data[0]
-    incident_dict = {}
-    for incident in data:
-        incident_dict[incident['incident_description']] = []
-    incidents = []
-    for incident in data:
-        incidents.append(incident)
-        incident_dict[ incident['incident_description'] ].append(incident)
+    # incident_dict = {}
+    # for incident in data:
+    #     incident_dict[incident['incident_description']] = []
+    # incidents = []
+    # for incident in data:
+    #     incidents.append(incident)
+    #     incident_dict[ incident['incident_description'] ].append(incident)
       
     
     # if incident == " ":
     #     payload = {'key': API_KEY, 'source': 'title', "incidents":incidents}
 
 
-    return render_template('search_officials.html', incidents=incidents, title=title)
+    return render_template('official_detail.html', incident=data[0], title=title)
 
 
 ## create a request to have all_official reports shown
