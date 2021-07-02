@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
 {% block title %}Unofficial Incident Report{% endblock %}
 
+{% block head %}
+{% endblock %}
+
+
 {% block body %}
 
+<p>
 {% if session.get("user_email") %}
+</p>
 
-<h1>Unofficial Incident Report</h1>
-<h3>Submit your own account of an incident that was not officially reported.</h3>
 
-<form id="incident_report" action="/incident_report" method="POST">
-    <p>Title <input type="text" name="title" required>*</p>
-    <p>Incident<br> 
-        <textarea name="incident" required></textarea></p>
-    <!-- <p>Submitted <input type="datetime" name="created_on" required>*</p> -->
-    <p>Neighborhood <input type="text" name="neighborhood" required>*</p>
-    <p>Incident Datetime <input type="datetime" name="incident_datetime" required>*</p>
-    <h5>* Please fill out all required fields.</h5>
-    <p>
-      <input type="submit" value="Submit">
-    </p>
+  <h3>Unofficial Incident Report</h3>
+    <h4>Submit your own account of an incident that was not officially reported.</h4>
+<div>
+  <form id="incident_report" action="/incident_report" method="POST">
+      <p>Title <input type="text" name="title" required>*</p>
+      <p>Incident<br> 
+          <textarea name="incident" required></textarea></p>
+      <!-- <p>Submitted <input type="datetime" name="created_on" required>*</p> -->
+      <p>Neighborhood <input type="text" name="neighborhood" required>*</p>
+      <p>Incident Datetime <input type="datetime" name="incident_datetime" required>*</p>
+      <h5>* Please fill out all required fields.</h5>
+      <p>
+        <input type="submit" value="Submit">
+      </p>
   </form>
-  
+</div>
 
 
 {% endif %}

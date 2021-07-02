@@ -12,24 +12,28 @@
   </head>
 
   <body>
-    <div class="container">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <div class="container-fluid">
       {% if session.get("user_email")%}
-      <div>
-          <a href ="/">Kinjo</a>
-          <a href="/search">Search</a>
-          <a href="/unofficials">Unofficial Reports</a>
-          
-          <a href = "/incident_report">Submit a Report</a>
-          <a href = "/logout">Logout</a>
+        <div>
+          <a class="navbar-brand" href="#">Kinjo</a>
+          <a class="navbar-brand" href="/search" >Search</a>
+          <a class="navbar-brand" href="/unofficials">Unofficial Reports</a>
+          <a class="navbar-brand" href="/incident_report">Submit a Report</a>
+          <a class="navbar-brand" href="/logout">Logout</a>
+        </div>
+      </nav>
+      {% else %}
+      <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <div>
+          <a class="navbar-brand" href="#">Kinjo</a>
+          <a class="navbar-brand" href="/search">Search</a>
+          <a class="navbar-brand" href="/unofficials">Unofficial Reports</a>
+          <a class="navbar-brand" href="/register">Register</a>
+          <a class="navbar-brand" href="/login">Login</a>
+        </div>
       </div>
-  {% else %}
-      <div>
-          <a href ="/">Kinjo</a>
-          <a href="/search">Search</a>
-          <a href="/unofficials">Unofficial Reports</a>
-          <a href = "/register">Register</a>
-          <a href = "/login">Login</a>
-      </div>
+      </nav>
   {% endif %}
 
 

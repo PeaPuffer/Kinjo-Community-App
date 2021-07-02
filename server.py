@@ -188,48 +188,8 @@ def official_detail(incident_id):
     data = res.json()
     print('!'*20)
     print(data)
-    #retreives individual incidents ex: data[0]
-    # incident_dict = {}
-    # for incident in data:
-    #     incident_dict[incident['incident_description']] = []
-    # incidents = []
-    # for incident in data:
-    #     incidents.append(incident)
-    #     incident_dict[ incident['incident_description'] ].append(incident)
-      
-    
-    # if incident == " ":
-    #     payload = {'key': API_KEY, 'source': 'title', "incidents":incidents}
 
-
-    return render_template('official_detail.html', incident=data[0], title=title)
-
-
-## create a request to have all_official reports shown
-# @app.route('/officials')
-# def get_all_official():
-#     """View all official reports from API"""
-
-#     url = 'https://data.sfgov.org/resource/wg3w-h783.json'
-#     payload = {'$$app_token': API_KEY}
-#     res = requests.get(url, params=payload)
-#     data = res.json
-#     
-
-#     return render_template("all_official.html", officials=officials) #(results=results)
-
-
-#detailed official reports #might not need this since the descriptions are short
-# @app.route('/officials, <official_id>', methods=["GET"])  
-# def get_official():
-#     """Get details of an official report"""
-
-#         url = 'https://data.sfgov.org/resource/wg3w-h783.json'
-#         payload = {'$$app_token': API_KEY}
-#         res = requests.get(url, params=payload)
-#         data = res.json
-
-#         return render_template("official_detail.html")
+    return render_template('official_detail.html', incident=data[0])
 
 
 ### COMMENT ####################################################
@@ -270,8 +230,9 @@ def login():
         return redirect('/login')
     else:
         session["user_email"] = user.email
+        session["user_id"] = user.user_id
         flash(f"Welcome back, {user.fname}!")
-        return redirect('/profile')
+        return redirect('/') #change to profile when save features added
 
 
 ### LOGOUT ####################################################

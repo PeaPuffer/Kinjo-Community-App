@@ -2,18 +2,18 @@
 {% block title %}All Unofficial Reports{% endblock %}
 
 {% block body %}
-    <h1>All Unofficial Reports</h1>
-
-    <ul>
-        {% for unofficial in unofficials %}
-          <li>
-            <a href="/unofficials/{{ unofficial.unofficial_id }}">
-              {{ unofficial.title}} - {{ unofficial.incident_datetime }}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-
+    <h3>All Unofficial Reports</h3>
+    <div>
+      <ul>
+          {% for unofficial in unofficials %}
+            <li>
+              <a href="/unofficials/{{ unofficial.unofficial_id }}">
+                {{ unofficial.title}} - {{ unofficial.incident_datetime }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+    </div>
 <!-- {% for unofficial in unofficials %}
     <p>{{unofficial}}</p>
 

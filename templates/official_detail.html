@@ -9,10 +9,24 @@
 <p>
   {{incident['incident_subcategory']}}
 </p>
+<li>
+  <p>Incident Datetime: {{incident['incident_datetime']}}  </p>
+  <p>Description: {{incident['incident_description']}} </p>
+  <p>Neighborhood: {{incident['analysis_neighborhood']}} </p> 
+  <p>Category: {{incident['incident_category']}}</p>
+</li>    
 
+<h4>Comments</h4>
+    
+      <h4>Write a comment</h4>
+        <p>
+          <form></form>
+            <textarea name="comment" id="comment"> </textarea>
+              <br />
+            <input type="submit" value="Submit" title="Comment">    
+          </form>
+        </p>
 {% endblock %}
 
-<li>
-  {{incident['incident_datetime']}} - {{incident['incident_description']}} -
-  {{incident['analysis_neighborhood']}} - {{incident['incident_category']}}
-</li>    
+<!-- <form action="/official/{{official.official_id}}/comment" method="POST"> -->
+
