@@ -6,6 +6,31 @@
 
 
 {% block body %}
+<style>
+  h1{
+  font-size: 2rem;
+  /* text-transform: uppercase; */
+  letter-spacing: 2px;
+  border: 5px solid #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 5rem 10rem;
+} 
+h3{
+  font-size: 2rem;
+  /* text-transform: uppercase; */
+  letter-spacing: 2px;
+  border: 5px solid #fff;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2.5rem 5rem;
+} 
+  
+</style>
 
 <p>
 {% if session.get("user_email") %}
@@ -13,21 +38,24 @@
 
 
   <h3>Unofficial Incident Report</h3>
-    <h4>Submit your own account of an incident that was not officially reported.</h4>
-<div>
+    <h1>Submit your own incident report.<br>
+
+  <div>
   <form id="incident_report" action="/incident_report" method="POST">
+    
       <p>Title <input type="text" name="title" required>*</p>
-      <p>Incident<br> 
+      <p>Incident <br>
           <textarea name="incident" required></textarea></p>
-      <!-- <p>Submitted <input type="datetime" name="created_on" required>*</p> -->
       <p>Neighborhood <input type="text" name="neighborhood" required>*</p>
       <p>Incident Datetime <input type="datetime" name="incident_datetime" required>*</p>
       <h5>* Please fill out all required fields.</h5>
       <p>
-        <input type="submit" value="Submit">
+        <input class="btn btn-light" type="submit" value="Submit">
       </p>
+   
   </form>
-</div>
+</div> 
+</h1>
 
 
 {% endif %}

@@ -1,16 +1,51 @@
 {% extends 'base.html' %}
 {% block title %}Search{% endblock %}
 
+{% block head %} {% endblock %}
+
 {% block body %}
-    <form action='/search', method='POST'>
-        Search for an incident: 
+<style>
+  h3{
+    font-size: 2rem;
+    /* text-transform: uppercase; */
+    letter-spacing: 2px;
+    border: 5px solid #fff;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2.5rem 5rem;
+  }
+  h1{
+    font-size: 1.9rem;
+    /* text-transform: uppercase; */
+    letter-spacing: 2px;
+    /* border: 5px solid #fff; */
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    padding: 2.5rem 5rem;
+  }
+  a:link, a:visited {
+  color: #fff;
+  background-color: transparent;
+  text-decoration: none;
+  }
+</style>
+
+
+    <div>
+      <h3><form action='/search', method='POST'>
+        Search for incidents: 
         
         <input type='text' name='incident' id='search'>
 
         <input type="submit" value="Submit">
-    </form>
+      </form></h3>
+    </div>
 
-    <ul>
+    <h1><ul>
         {% for incident in incidents %}
             <li>
                 <a href='/official_detail/{{ incident['incident_id'] }}'> {{incident['report_datetime']}} - {{incident['incident_description']}} -
@@ -18,4 +53,32 @@
             </li>    
         {% endfor %}  
     </ul>
+    </h1>
 {% endblock %}
+
+
+<!-- <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Incident Datetime</th>
+        <th scope="col">Incident Subcategory</th>
+        <th scope="col">Neighborhood</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table> -->

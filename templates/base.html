@@ -4,19 +4,72 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
     <title>
-      {% block title %}{% endblock %}
+      {% block title %}Kinjo{% endblock %}
     </title>
 
-    {% block head %}{% endblock %}
+
+<style>
+    @import "http://fonts.googleapis.com/css?family=Lato:100";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 10px;
+    font-family: "Lato", Arial, sans-serif;
+}
+
+section{
+    width: 100%;
+    height: 100vh;
+    color: #fff;
+    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+    background-size: 400%-600%;
+    position: relative;
+    animation: change 10s ease-in-out infinite; 
+}
+
+/* h1{
+    font-size: 5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 3px solid #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 5rem 10rem;
+} */
+
+@keyframes change {
+    0%{
+        background-position: 0 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0 50%
+    }
+    }
+
+</style>
+
+    
   </head>
 
   <body>
+    <section>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <div class="container-fluid">
       {% if session.get("user_email")%}
         <div>
-          <a class="navbar-brand" href="#">Kinjo</a>
+          <a class="navbar-brand" href="/">Kinjo</a>
           <a class="navbar-brand" href="/search" >Search</a>
           <a class="navbar-brand" href="/unofficials">Unofficial Reports</a>
           <a class="navbar-brand" href="/incident_report">Submit a Report</a>
@@ -26,7 +79,7 @@
       {% else %}
       <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div>
-          <a class="navbar-brand" href="#">Kinjo</a>
+          <a class="navbar-brand" href="/">Kinjo</a>
           <a class="navbar-brand" href="/search">Search</a>
           <a class="navbar-brand" href="/unofficials">Unofficial Reports</a>
           <a class="navbar-brand" href="/register">Register</a>
@@ -39,7 +92,7 @@
 
     {% for msg in get_flashed_messages() %}
       <p class="flash-msg">
-        {{ msg }}
+        <h3>{{ msg }}</h3>
       </p>
     {% endfor %}
 
@@ -48,5 +101,8 @@
     {% block after_body %}{% endblock %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    </section>
+    <div class="wrapper"></div>
   </body>
 </html>

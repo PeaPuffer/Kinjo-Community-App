@@ -3,10 +3,29 @@
 {% block title %}{{ unofficial.title }} - Details{% endblock %}
 
 {% block body %}
+<style>
+  h1{
+    text-align: center;
+    color: #fff;
+  }
 
+  h3{
+    text-align: center;
+    color: #fff;
+  }
+  h4{
+    text-align: right;
+    color: #fff;
+  }
+ 
+</style>
 
-
+<div>
 <h1>{{ unofficial.title }}</h1>
+  
+  <h3><p>
+    Submitted By: {{unofficial.user.fname}}
+  </p>
 
   <p>
     Description: {{ unofficial.incident }}
@@ -17,18 +36,31 @@
   <p>
     Incident Datetime: {{ unofficial.incident_datetime }}
   </p>
-
-<h4>Comments</h4>
+  </h3>
+  </div>
+ <!--  -->
+ <h4>
+   <form action="/unofficial/{{ unofficial.unofficial_id }}" method="POST">
+    <div>
+        <h4>
+            Comments
+        </h4>
+        {% for dict_comment in comments %}
+            {% for user_id, comment in dict_comment.items() %}
+                <p>
+                    <b>{{ user_id }}:</b> {{ comment }}
+                </p>
+            {% endfor %}
+        {% endfor %}
     
-      <h4>Write a comment</h4>
-        <p>
-          <form action="/unofficials/{{unofficial.unofficial_id}}/comment" method="POST">
-            <textarea name="comment" id="comment"> </textarea>
-              <br />
-            <input type="submit" value="Submit" title="Comment">    
-          </form>
-        </p>
+        <textarea name="comment" id="comment" placeholder="Write a comment ..." rows="2" cols="35"></textarea>
+    </div>
+    <div>
+        <input class="btn btn-light" type="submit" value="Add Comment" name="add_comment" id="add_comment">
 
+    </div>
+  </form>
+</h4>
 
 {% endblock %}
 

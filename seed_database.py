@@ -49,9 +49,13 @@ for n in range(10):
     user = crud.create_user(fname, lname, email, password, neighborhood)
 
 
-### KUCHI KOPI'S ACCOUNT ################################################
+### DEMO USER ACCOUNT ################################################
 
-crud.create_user("Kuchi", "Kopi", "kuchikopi@bobsburgers.com", "kk123", "Fortress")
+crud.create_user("Leilah", "Wang", "lwang@gmail.com", "lw123", "Richmond")
+crud.create_user("Carmen", "Chen", "CChen@gmail.com", "cc123", "Hunter's Point")
+crud.create_user("Joanna", "Yee", "Jyee@gmail.com", "lw123", "Cole Valley")
+crud.create_user("Janet", "Jackson", "JJackson@gmail.com", "jj123", "Richmond")
+crud.create_user("Phillip", "Wang", "pwang@gmail.com", "pw123", "Richmond")
 
 ### SEED UNOFFICIAL REPORTS #############################################
 
