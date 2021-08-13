@@ -43,7 +43,6 @@ class Official(db.Model):
     description = db.Column(db.Text, nullable=False)
     incident_datetime = db.Column(db.DateTime, nullable=False) #when did it happen
     neighborhood = db.Column(db.String, nullable=False)
-    # comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
     
     #comments = a list of Comment objects (db.relationship)
     # comment = db.relationship("Comment", backref="officials")
@@ -67,7 +66,6 @@ class Unofficial(db.Model):
     neighborhood = db.Column(db.String, nullable=False)
     incident_datetime = db.Column(db.DateTime, nullable=False) #don't use datetime.now()
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    # comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
     
     #comments = a list of Comment objects (db.relationship)
 
